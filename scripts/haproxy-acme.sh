@@ -1,19 +1,19 @@
 #!/bin/bash
 
-if [ "$EUID" -ne 0 ]; then
-  echo "This script must be run as root."
+if [ "$(id -u)" -ne 0 ]; then
+  echo "This script must be run as root (not sudo). Use 'sudo su' instead."
   exit 1
 fi
 
 prompt_var() {
   local var_name=$1
   local var_value="${!var_name}"
-  
+
   while [ -z "$var_value" ]; do
     read -p "Set the variable $var_name: " var_value
   done
 
-  $var_name="$var_value"
+  export $var_name="$var_value"
 }
 
 for var in domain email CF_Token TROJAN_PASSWORDS; do
@@ -24,7 +24,7 @@ if [ ! -f "$TROJAN_PASSWORDS" ]; then
   bash scripts/generate-passwords.sh $TROJAN_PASSWORDS
 fi
 
-apt update && apt install -y haproxy
+apt update && apt install -y haproxy cron
 
 mkdir /etc/haproxy/certs
 chown haproxy:haproxy /etc/haproxy/certs
