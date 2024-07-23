@@ -18,19 +18,19 @@ echo "}
 
 function trojan_auth(txn)
     local status, data = pcall(function() return txn.req:dup() end)
-    -- Uncomment to enable logging of all received data
-    -- core.Info("Received data from client: " .. data)
     if status and data then
+        -- Uncomment to enable logging of all received data
+        -- core.Info(\"Received data from client: \" .. data)
         local sniffed_password = string.sub(data, 1, 56)
         -- Uncomment to enable logging of sniffed password hashes
-        -- core.Info("Sniffed password: " .. sniffed_password)
+        -- core.Info(\"Sniffed password: \" .. sniffed_password)
         for _, password in ipairs(passwords) do
             if sniffed_password == password then
-                return "trojan"
+                return \"trojan\"
             end
         end
     end
-    return "http"
+    return \"http\"
 end
 
 core.register_fetches(\"trojan_auth\", trojan_auth)" >> $OUTPUT_LUA
