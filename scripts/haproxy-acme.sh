@@ -32,7 +32,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-apt install -y haproxy cron
+apt install -y haproxy cron socat
 
 mkdir /etc/haproxy/certs
 chown haproxy:haproxy /etc/haproxy/certs
