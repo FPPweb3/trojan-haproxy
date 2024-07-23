@@ -24,7 +24,9 @@ if [ ! -f "$TROJAN_PASSWORDS" ]; then
   bash scripts/generate-passwords.sh $TROJAN_PASSWORDS
 fi
 
-apt update && apt install -y curl grep jq
+export DEBIAN_FRONTEND=noninteractive
+
+apt update && apt install -y curl grep jq openssl
 
 bash scripts/test-cf-token.sh
 if [ $? -ne 0 ]; then
