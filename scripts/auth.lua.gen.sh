@@ -33,6 +33,6 @@ function trojan_auth(txn)
     return "http"
 end
 
-core.register_fetches("trojan_auth", trojan_auth)" >> $OUTPUT_LUA
+core.register_fetches(\"trojan_auth\", trojan_auth)" >> $OUTPUT_LUA
 
 systemctl reload haproxy.service
