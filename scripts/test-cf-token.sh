@@ -30,7 +30,7 @@ test_response=$(curl --silent --request GET \
 test_zone_id=$(echo $response | jq -r --arg test_suffix1 "$test_suffix1" --arg test_suffix2 "$test_suffix2" '.result[] | select(.name==$test_suffix1 or .name==$test_suffix2) | .id' | head -1)
 
 
-if [ -z "$zone_id" ]; then
+if [ -z "$test_zone_id" ]; then
   echo "ERROR: NOT VALID CF_Tocken: Zone ID for $test_suffix1 and $test_suffix2 not found."
   exit 1
 else
