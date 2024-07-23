@@ -1,5 +1,12 @@
 #!/bin/bash
 
+for cmd in curl grep jq; do
+  if ! command -v "$cmd" &> /dev/null; then
+    echo "ERROR: $cmd is not installed."
+    exit 1
+  fi
+done
+
 if ! command -v curl &> /dev/null; then
   echo "ERROR: curl is not installed"
   exit 1
