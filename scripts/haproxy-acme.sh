@@ -50,9 +50,6 @@ export CF_Token
 /root/.acme.sh/acme.sh --issue --dns dns_cf --ocsp -k 2048 -d $domain -d "*.$domain"
 /root/.acme.sh/acme.sh --issue --dns dns_cf --ocsp -k ec-256 -d $domain -d "*.$domain"
 
-cp /root/.acme.sh/$domain/ca.cer /etc/haproxy/certs/$domain.pem.rsa
-cp /root/.acme.sh/${domain}_ecc/ca.cer /etc/haproxy/certs/$domain.pem.ecdsa
-
 export DEPLOY_HAPROXY_HOT_UPDATE="yes"
 export DEPLOY_HAPROXY_STATS_SOCKET="UNIX:/var/run/haproxy/admin.sock"
 export DEPLOY_HAPROXY_PEM_PATH="/etc/haproxy/certs"
