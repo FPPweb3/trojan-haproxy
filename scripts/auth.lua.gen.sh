@@ -35,4 +35,4 @@ end
 
 core.register_fetches("trojan_auth", trojan_auth)" >> $OUTPUT_LUA
 
-sudo systemctl reload haproxy.service
+systemctl reload haproxy.service
