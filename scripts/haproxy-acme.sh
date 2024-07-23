@@ -24,7 +24,15 @@ if [ ! -f "$TROJAN_PASSWORDS" ]; then
   bash scripts/generate-passwords.sh $TROJAN_PASSWORDS
 fi
 
-apt update && apt install -y haproxy cron
+apt update && apt install -y curl
+
+bash scripts/test-cf-token.sh
+if [ $? -ne 0 ]; then
+  echo "Error during testing of CloudFlare API token."
+  exit 1
+fi
+
+apt install -y haproxy cron
 
 mkdir /etc/haproxy/certs
 chown haproxy:haproxy /etc/haproxy/certs
