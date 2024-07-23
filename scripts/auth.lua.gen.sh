@@ -1,8 +1,12 @@
 #!/bin/bash
 
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root or sudo." 
+   exit 1
+fi
+
 TROJAN_PASSWORDS="$1"
 OUTPUT_LUA="/etc/haproxy/auth.lua"
-
 
 echo "
 local passwords = {" > $OUTPUT_LUA
