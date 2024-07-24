@@ -16,9 +16,18 @@ prompt_var() {
   export $var_name="$var_value"
 }
 
+validate_email() {
+    [[ $1 =~ "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" ]] && [[ ! $1 =~ "@example\.com$" ]]
+}
+
 for var in domain email CF_Token TROJAN_PASSWORDS; do
   prompt_var $var
 done
+
+if validate_email "$email"; then
+  echo "Invalid email address ( @example.com not supported )."
+  exit 1
+fi
 
 if [ ! -f "$TROJAN_PASSWORDS" ]; then
   bash scripts/generate-passwords.sh $TROJAN_PASSWORDS
