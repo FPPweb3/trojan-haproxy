@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ "$(id -u)" -ne 0 ]; then
-  echo "This script must be run as root (not sudo). Use 'sudo su' instead."
-  exit 1
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root." 
+   exit 1
 fi
 
 prompt_var() {
