@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root." 
+   echo "This script must be run as root."
    exit 1
 fi
 
@@ -13,10 +13,11 @@ local passwords = {" > $OUTPUT_LUA
 
 while IFS= read -r line
 do
-  echo "    \"$(echo -n "$line" | openssl dgst -sha224 | sed 's/.* //')\",	-- $line" >> $OUTPUT_LUA
+  echo "    [\"$(echo -n "$line" | openssl dgst -sha224 | sed 's/.* //')\"] = true,	-- $line" >> $OUTPUT_LUA
 done < $TROJAN_PASSWORDS
 
-tac $OUTPUT_LUA | sed '0,/,/s///' | tac > /tmp/auth-gen.temp && mv /tmp/auth-gen.temp $OUTPUT_LUA
+# tac $OUTPUT_LUA | sed '0,/,/s///' | tac > /tmp/auth-gen.temp && mv /tmp/auth-gen.temp $OUTPUT_LUA
+tac $OUTPUT_LUA | sed '0,/,/{s/,/\t/}' | tac > /tmp/auth-gen.temp && mv /tmp/auth-gen.temp $OUTPUT_LUA
 
 echo "}
 
@@ -28,10 +29,8 @@ function trojan_auth(txn)
         local sniffed_password = string.sub(data, 1, 56)
         -- Uncomment to enable logging of sniffed password hashes
         -- core.Info(\"Sniffed password: \" .. sniffed_password)
-        for _, password in ipairs(passwords) do
-            if sniffed_password == password then
-                return \"trojan\"
-            end
+        if passwords[sniffed_password] then
+            return \"trojan\"
         end
     end
     return \"http\"
