@@ -16,7 +16,6 @@ do
   echo "    [\"$(echo -n "$line" | openssl dgst -sha224 | sed 's/.* //')\"] = true,	-- $line" >> $OUTPUT_LUA
 done < $TROJAN_PASSWORDS
 
-# tac $OUTPUT_LUA | sed '0,/,/s///' | tac > /tmp/auth-gen.temp && mv /tmp/auth-gen.temp $OUTPUT_LUA
 tac $OUTPUT_LUA | sed '0,/,/{s/,/\t/}' | tac > /tmp/auth-gen.temp && mv /tmp/auth-gen.temp $OUTPUT_LUA
 
 echo "}
