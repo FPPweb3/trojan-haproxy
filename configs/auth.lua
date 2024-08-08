@@ -1,4 +1,3 @@
-
 local passwords = {
     ["d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f"] = true,		-- ""
     ["78d8045d684abd2eece923758f3cd781489df3a48e1278982466017f"] = true,		-- "123"
